@@ -4,6 +4,7 @@
 
 #include <QString>
 #include <QSettings>
+#include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -68,9 +69,15 @@ void MainWindow::updateDistance()
 
 void MainWindow::saveSettings()
 {
-    QSettings settings(settingsPath, QSettings::NativeFormat);
+    QSettings settings(settingsPath, QSettings::IniFormat);
     settings.setValue("interval", interval);
     settings.sync();
+    if(settings.status() != settings.NoError)
+    {
+        QMessageBox *msg = new QMessageBox(this);
+        msg->setText("Ошибка при сохранении настроек");
+        msg->show();
+    }
 
 }
 
