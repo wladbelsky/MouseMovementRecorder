@@ -12,14 +12,17 @@ CONFIG += console
 SOURCES += \
     main.cpp \
     mainwindow.cpp \
-    mousetrackingpanel.cpp
+    mousetrackingpanel.cpp \
+    settingsdialog.cpp
 
 HEADERS += \
     mainwindow.h \
-    mousetrackingpanel.h
+    mousetrackingpanel.h \
+    settingsdialog.h
 
 FORMS += \
-    mainwindow.ui
+    mainwindow.ui \
+    settingsdialog.ui
 
 TRANSLATIONS += \
     MouseMovementRecorder_ru_RU.ts

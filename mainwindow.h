@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QMouseEvent>
+#include <QTimer>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -19,8 +20,20 @@ public:
 public slots:
     void mouseInfoUpdate(QMouseEvent event);
 
+private slots:
+    void on_settingButton_clicked();
+    void timerTick();
+
 private:
     Ui::MainWindow *ui;
+    int interval = 5;
+    int distance = 0;
+    QPoint prev = QPoint(-1,-1), curr = QPoint(-1,-1);
+    QTimer *timer;
+
+    void updateDistance();
+//    void loadSettings();
+//    void saveSettings();
 
 };
 #endif // MAINWINDOW_H
