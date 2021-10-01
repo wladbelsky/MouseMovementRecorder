@@ -26,14 +26,15 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    int interval = 5;
-    int distance = 0;
+    unsigned int interval = 5;
+    unsigned int distance = 0;
     QPoint prev = QPoint(-1,-1), curr = QPoint(-1,-1);
     QTimer *timer;
+    QString settingsPath;
 
     void updateDistance();
-//    void loadSettings();
-//    void saveSettings();
+    void loadSettings();
+    void saveSettings();
 
 };
 #endif // MAINWINDOW_H

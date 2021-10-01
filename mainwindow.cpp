@@ -3,12 +3,16 @@
 #include "settingsdialog.h"
 
 #include <QString>
+#include <QSettings>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    settingsPath = QApplication::applicationDirPath() + "/settings.cfg";
+    loadSettings();
+
     timer = new QTimer();
     timer->setInterval(interval*1000);
     connect(timer, SIGNAL(timeout()), this, SLOT(timerTick()));
@@ -41,11 +45,13 @@ void MainWindow::mouseInfoUpdate(QMouseEvent event)
 
 void MainWindow::on_settingButton_clicked()
 {
-    SettingsDialog *dialog = new SettingsDialog(this);
+    SettingsDialog *dialog = new SettingsDialog(interval, this);
     if(dialog->exec() == QDialog::Accepted)
     {
         interval = dialog->getIntervalSetting();
         timer->setInterval(interval*1000);
+        updateDistance();
+        saveSettings();
     }
 }
 
@@ -58,4 +64,18 @@ void MainWindow::timerTick()
 void MainWindow::updateDistance()
 {
     ui->pathLabel->setText(QString("За последние %1 секунд пройдено %2 px").arg(interval).arg(distance));
+}
+
+void MainWindow::saveSettings()
+{
+    QSettings settings(settingsPath, QSettings::NativeFormat);
+    settings.setValue("interval", interval);
+    settings.sync();
+
+}
+
+void MainWindow::loadSettings()
+{
+    QSettings settings(settingsPath, QSettings::NativeFormat);
+    interval = settings.value("interval", 5).toUInt();
 }

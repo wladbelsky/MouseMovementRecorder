@@ -1,11 +1,12 @@
 #include "settingsdialog.h"
 #include "ui_settingsdialog.h"
 
-SettingsDialog::SettingsDialog(QWidget *parent) :
+SettingsDialog::SettingsDialog(unsigned int interval,QWidget *parent) :
     QDialog(parent),
     ui(new Ui::SettingsDialog)
 {
     ui->setupUi(this);
+    ui->secondsBox->setValue(interval);
 }
 
 SettingsDialog::~SettingsDialog()
